@@ -2,15 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* LifeCraft font til overskrifter */
-@font-face {
-  font-family: 'LifeCraft';
-  src: url('/fonts/LifeCraft_Font.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-/* Open Sans fra Google Fonts */
 :root {
   --font-life-craft: 'LifeCraft', sans-serif;
   --font-open-sans: 'Open Sans', sans-serif;
