@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import useSWR from "swr";
 import UsernameGenerator from "@/components/UsernameGenerator";
+import { AlertCircle } from "lucide-react";
 
 const fetcher = async (url) => {
   const res = await fetch(url);
@@ -16,7 +17,6 @@ const fetcher = async (url) => {
 };
 
 export default function Home() {
-  // Brug useEffect til at håndtere initial form state
   const [mounted, setMounted] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -57,7 +57,6 @@ export default function Home() {
         throw new Error(errorData.error || "Failed to add character.");
       }
 
-      // Reset form med tomme strings
       setForm({
         name: "",
         level: "",
@@ -72,162 +71,195 @@ export default function Home() {
     }
   };
 
-  // Undgå rendering indtil component er mounted
   if (!mounted) {
     return (
-      <div className="min-h-screen p-4 bg-background text-primaryText">
-        <div className="max-w-2xl mx-auto">
-          <h1 className="text-3xl font-bold text-center mb-8">
-            Mayo Death Counter
-          </h1>
-          <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-accent border-t-transparent"></div>
-          </div>
-        </div>
+      <div className="min-h-screen bg-background text-primaryText flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-accent border-t-transparent"></div>
       </div>
     );
   }
 
   return (
-    <main className="min-h-screen p-4 bg-background text-primaryText">
-      <div className="max-w-2xl mx-auto">
-        <h1 className="text-3xl font-bold text-center mb-8">
-          Mayo Death Counter
-        </h1>
-        <UsernameGenerator /> {/* Tilføjet her */}
-        {submitError && (
-          <div className="bg-red-500 text-white p-3 rounded mb-4">
-            {submitError}
-          </div>
-        )}
-        <form
-          className="mb-8 space-y-4"
-          onSubmit={handleSubmit}
-          autoComplete="off"
-        >
-          <div className="relative">
-            <label className="block mb-1">Karakter Navn</label>
-            <input
-              type="text"
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="w-full p-2 rounded bg-inputBg text-white focus:outline-none focus:ring-2 focus:ring-accent"
-              required
-              maxLength={50}
-              autoComplete="off"
-              data-form-type="other"
-            />
-          </div>
+    <main className="min-h-screen bg-background text-primaryText">
+      {/* Header Section */}
+      <div className="bg-gradient-to-b from-accent/10 to-background pt-12 pb-6">
+        <div className="max-w-6xl mx-auto px-4">
+          <h1 className="text-5xl font-bold text-center mb-2 text-accent">
+            Mayo Death Counter
+          </h1>
+          <p className="text-center text-gray-400 mb-8">
+            Track your team's memorable defeats
+          </p>
+        </div>
+      </div>
 
-          <div className="relative">
-            <label className="block mb-1">Level</label>
-            <input
-              type="number"
-              value={form.level}
-              onChange={(e) => setForm({ ...form, level: e.target.value })}
-              className="w-full p-2 rounded bg-inputBg text-white focus:outline-none focus:ring-2 focus:ring-accent"
-              required
-              min="1"
-              max="60"
-              autoComplete="off"
-              data-form-type="other"
-            />
-          </div>
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Left Column - Form Section */}
+          <div className="space-y-6">
+            <div className="bg-inputBg rounded-lg p-6 shadow-lg">
+              <h2 className="text-2xl font-bold mb-6 text-accent">
+                Register New Death
+              </h2>
 
-          <div className="relative">
-            <label className="block mb-1">Class</label>
-            <input
-              type="text"
-              value={form.characterClass}
-              onChange={(e) =>
-                setForm({ ...form, characterClass: e.target.value })
-              }
-              className="w-full p-2 rounded bg-inputBg text-white focus:outline-none focus:ring-2 focus:ring-accent"
-              required
-              maxLength={50}
-              autoComplete="off"
-              data-form-type="other"
-            />
-          </div>
-
-          <div className="relative">
-            <label className="block mb-1">Hvem der døde</label>
-            <input
-              type="text"
-              value={form.player}
-              onChange={(e) => setForm({ ...form, player: e.target.value })}
-              className="w-full p-2 rounded bg-inputBg text-white focus:outline-none focus:ring-2 focus:ring-accent"
-              required
-              maxLength={50}
-              autoComplete="off"
-              data-form-type="other"
-            />
-          </div>
-
-          <div className="relative">
-            <label className="block mb-1">Dødsårsag</label>
-            <input
-              type="text"
-              value={form.reason}
-              onChange={(e) => setForm({ ...form, reason: e.target.value })}
-              className="w-full p-2 rounded bg-inputBg text-white focus:outline-none focus:ring-2 focus:ring-accent"
-              required
-              maxLength={200}
-              autoComplete="off"
-              data-form-type="other"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full p-2 rounded bg-accent hover:bg-orange-600 transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background"
-          >
-            Tilføj Dødsfald
-          </button>
-        </form>
-        <section>
-          {error && (
-            <div className="bg-red-500 text-white p-4 rounded mb-4">
-              Fejl ved indlæsning: {error.message}
-            </div>
-          )}
-
-          {isLoading ? (
-            <div className="text-center p-8">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-accent border-t-transparent"></div>
-              <p className="mt-2">Indlæser dødsfald...</p>
-            </div>
-          ) : characters.length === 0 ? (
-            <p className="text-center text-gray-400">
-              Ingen dødsfald registreret endnu.
-            </p>
-          ) : (
-            <ul className="space-y-3">
-              {characters.map(
-                ([name, level, reason, characterClass, player], index) => (
-                  <li
-                    key={`${name}-${level}-${index}`}
-                    className="p-4 bg-inputBg rounded transition-transform hover:scale-[1.01]"
-                  >
-                    <div className="flex justify-between items-start mb-2">
-                      <div>
-                        <strong className="text-accent">{name}</strong>
-                        <span className="text-gray-400"> (Level {level})</span>
-                        <span className="text-gray-400 ml-2">
-                          - {characterClass}
-                        </span>
-                      </div>
-                      <span className="text-sm text-gray-400">
-                        Spiller: {player}
-                      </span>
-                    </div>
-                    <p className="mt-1 text-sm">{reason}</p>
-                  </li>
-                )
+              {submitError && (
+                <div className="bg-red-500/10 border border-red-500 text-red-500 p-4 rounded-lg mb-6 flex items-center gap-2">
+                  <AlertCircle className="w-5 h-5" />
+                  <p>{submitError}</p>
+                </div>
               )}
-            </ul>
-          )}
-        </section>
+
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-4"
+                autoComplete="off"
+              >
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-300">
+                    Character Name
+                  </label>
+                  <input
+                    type="text"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    className="w-full p-3 rounded-lg bg-background border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                    required
+                    maxLength={50}
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-300">
+                      Level
+                    </label>
+                    <input
+                      type="number"
+                      value={form.level}
+                      onChange={(e) =>
+                        setForm({ ...form, level: e.target.value })
+                      }
+                      className="w-full p-3 rounded-lg bg-background border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                      required
+                      min="1"
+                      max="60"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-300">
+                      Class
+                    </label>
+                    <input
+                      type="text"
+                      value={form.characterClass}
+                      onChange={(e) =>
+                        setForm({ ...form, characterClass: e.target.value })
+                      }
+                      className="w-full p-3 rounded-lg bg-background border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                      required
+                      maxLength={50}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-300">
+                    Player Name
+                  </label>
+                  <input
+                    type="text"
+                    value={form.player}
+                    onChange={(e) =>
+                      setForm({ ...form, player: e.target.value })
+                    }
+                    className="w-full p-3 rounded-lg bg-background border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                    required
+                    maxLength={50}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-300">
+                    Cause of Death
+                  </label>
+                  <input
+                    type="text"
+                    value={form.reason}
+                    onChange={(e) =>
+                      setForm({ ...form, reason: e.target.value })
+                    }
+                    className="w-full p-3 rounded-lg bg-background border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                    required
+                    maxLength={200}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full p-3 rounded-lg bg-accent hover:bg-orange-600 transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background font-medium"
+                >
+                  Register Death
+                </button>
+              </form>
+            </div>
+
+            <div className="bg-inputBg rounded-lg shadow-lg overflow-hidden">
+              <UsernameGenerator />
+            </div>
+          </div>
+
+          {/* Right Column - Deaths List */}
+          <div className="space-y-6">
+            <div className="bg-inputBg rounded-lg p-6 shadow-lg">
+              <h2 className="text-2xl font-bold mb-6 text-accent">Death Log</h2>
+
+              {error && (
+                <div className="bg-red-500/10 border border-red-500 text-red-500 p-4 rounded-lg mb-6 flex items-center gap-2">
+                  <AlertCircle className="w-5 h-5" />
+                  <p>Failed to load deaths: {error.message}</p>
+                </div>
+              )}
+
+              {isLoading ? (
+                <div className="flex items-center justify-center py-12">
+                  <div className="animate-spin rounded-full h-8 w-8 border-4 border-accent border-t-transparent"></div>
+                </div>
+              ) : characters.length === 0 ? (
+                <div className="text-center py-12 text-gray-400">
+                  <p className="text-lg">No deaths recorded yet.</p>
+                  <p className="text-sm">Be the first to die!</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {characters.map(
+                    ([name, level, reason, characterClass, player], index) => (
+                      <div
+                        key={`${name}-${level}-${index}`}
+                        className="bg-background rounded-lg p-4 hover:bg-gray-900 transition-colors border border-gray-800"
+                      >
+                        <div className="flex flex-wrap justify-between items-start gap-2 mb-2">
+                          <div className="flex items-center gap-2">
+                            <span className="text-lg font-medium text-accent">
+                              {name}
+                            </span>
+                            <span className="text-sm text-gray-400">
+                              Lvl {level} {characterClass}
+                            </span>
+                          </div>
+                          <span className="text-sm text-gray-400">
+                            Player: {player}
+                          </span>
+                        </div>
+                        <p className="text-gray-300 text-sm">{reason}</p>
+                      </div>
+                    )
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   );
