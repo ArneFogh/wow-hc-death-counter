@@ -77,7 +77,7 @@ export default function Home() {
       <div className="min-h-screen p-4 bg-background text-primaryText">
         <div className="max-w-2xl mx-auto">
           <h1 className="text-3xl font-bold text-center mb-8">
-            Team Mayo Death Counter
+            Mayo Death Counter
           </h1>
           <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-accent border-t-transparent"></div>
@@ -91,7 +91,7 @@ export default function Home() {
     <main className="min-h-screen p-4 bg-background text-primaryText">
       <div className="max-w-2xl mx-auto">
         <h1 className="text-3xl font-bold text-center mb-8">
-          Team Mayo Death Counter
+          Mayo Death Counter
         </h1>
 
         {submitError && (
