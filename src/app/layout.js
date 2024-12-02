@@ -1,15 +1,20 @@
 import localFont from "next/font/local";
+import { Open_Sans } from "next/font/google";
 import "./globals.css";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+// LifeCraft font til overskrifter
+const lifeCraft = localFont({
+  src: "./fonts/LifeCraft_Font.ttf",
+  variable: "--font-life-craft",
+  weight: "400",
+  style: "normal",
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+
+// Open Sans font til data og indhold
+const openSans = Open_Sans({
+  subsets: ["latin"],
+  variable: "--font-open-sans",
+  weight: ["400", "700"], // Normal og fed tekst
 });
 
 export const metadata = {
@@ -21,7 +26,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${lifeCraft.variable} ${openSans.variable} antialiased`}
       >
         {children}
       </body>

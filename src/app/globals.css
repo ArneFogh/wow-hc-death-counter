@@ -2,20 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* LifeCraft font til overskrifter */
+@font-face {
+  font-family: 'LifeCraft';
+  src: url('/fonts/LifeCraft_Font.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Open Sans fra Google Fonts */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-life-craft: 'LifeCraft', sans-serif;
+  --font-open-sans: 'Open Sans', sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Anvend LifeCraft til overskrifter */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-life-craft);
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+/* Anvend Open Sans til brødtekst og data */
+body, p, ul, li, table, input, button {
+  font-family: var(--font-open-sans);
 }
