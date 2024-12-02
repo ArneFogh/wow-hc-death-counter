@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import useSWR from "swr";
+import UsernameGenerator from "@/components/UsernameGenerator";
 
 const fetcher = async (url) => {
   const res = await fetch(url);
@@ -93,13 +94,12 @@ export default function Home() {
         <h1 className="text-3xl font-bold text-center mb-8">
           Mayo Death Counter
         </h1>
-
+        <UsernameGenerator /> {/* Tilføjet her */}
         {submitError && (
           <div className="bg-red-500 text-white p-3 rounded mb-4">
             {submitError}
           </div>
         )}
-
         <form
           className="mb-8 space-y-4"
           onSubmit={handleSubmit}
@@ -185,7 +185,6 @@ export default function Home() {
             Tilføj Dødsfald
           </button>
         </form>
-
         <section>
           {error && (
             <div className="bg-red-500 text-white p-4 rounded mb-4">
