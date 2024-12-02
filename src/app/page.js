@@ -56,7 +56,15 @@ export default function Home() {
         throw new Error(errorData.error || "Failed to add character.");
       }
 
-      setForm({ name: "", level: "", reason: "" });
+      // Reset form med tomme strings
+      setForm({
+        name: "",
+        level: "",
+        reason: "",
+        characterClass: "",
+        player: "",
+      });
+
       mutate();
     } catch (error) {
       setSubmitError(error.message);
@@ -120,7 +128,7 @@ export default function Home() {
               className="w-full p-2 rounded bg-inputBg text-white focus:outline-none focus:ring-2 focus:ring-accent"
               required
               min="1"
-              max="100"
+              max="60"
               autoComplete="off"
               data-form-type="other"
             />

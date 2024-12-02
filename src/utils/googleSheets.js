@@ -23,13 +23,25 @@ const auth = new google.auth.GoogleAuth({
 
 const sheets = google.sheets({ version: "v4", auth });
 
-export async function addDeath({ name, level, reason }) {
+export async function addDeath({
+  name,
+  level,
+  reason,
+  characterClass,
+  player,
+}) {
   try {
-    console.log("Attempting to add death:", { name, level, reason });
+    console.log("Attempting to add death:", {
+      name,
+      level,
+      reason,
+      characterClass,
+      player,
+    });
 
-    // Simpel range notation uden quotes
-    const range = "A2:C";
-    const values = [[name, level, reason]];
+    // Updated range to include new columns
+    const range = "A2:E";
+    const values = [[name, level, reason, characterClass, player]];
 
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId: SPREADSHEET_ID,
@@ -64,8 +76,8 @@ export async function getDeaths() {
   try {
     console.log("Attempting to fetch deaths from spreadsheet");
 
-    // Simpel range notation uden quotes og sheet navn
-    const range = "A1:C";
+    // Updated range to include new columns
+    const range = "A1:E";
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: SPREADSHEET_ID,
       range,

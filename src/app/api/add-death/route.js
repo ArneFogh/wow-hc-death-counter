@@ -1,4 +1,5 @@
-// In /api/add-death/route.js
+import { NextResponse } from "next/server";
+import { addDeath } from "@/utils/googleSheets";
 
 export async function POST(request) {
   try {
