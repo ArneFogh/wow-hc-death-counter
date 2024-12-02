@@ -80,8 +80,8 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-background text-primaryText bg-[url('/wow-bg.png')] bg-cover bg-fixed bg-center">
-      <div className="min-h-screen backdrop-blur-sm backdrop-brightness-50">
+    <main className="min-h-screen bg-background text-primaryText bg-[url('/images/wowbg.jpg')] bg-cover bg-fixed bg-center">
+      <div className="min-h-screen bg-background/90">
         {/* Header Section */}
         <div className="bg-gradient-to-b from-accent/10 to-transparent pt-12 pb-6">
           <div className="max-w-6xl mx-auto px-4">
