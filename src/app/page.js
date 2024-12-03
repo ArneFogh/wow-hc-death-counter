@@ -93,7 +93,7 @@ export default function Home() {
               <Skull className="w-8 h-8 text-accent" />
             </div>
             <p className="text-center text-gray-300 mb-8">
-              Chronicle your epic falls in battle
+              A list of falling Mayo's
             </p>
           </div>
         </div>
